@@ -1,0 +1,85 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  height: 100vh;            
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+/*로그인 정보 입력 상자*/
+.login .title {
+  margin-top: 180px;
+  margin-bottom: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+.login-input {
+  width: 400px;
+  padding: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+}
+.login-input .input-box {
+  width: 380px;
+  padding: 10px;
+  margin-top: 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 18px;
+}
+.login-input .helper-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+}
+/*로그인&회원가입 버튼*/
+.login-button .btn {
+  width: 80%;
+  padding: 10px;
+  background-color: #ACA0EB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.signin-button .btn {
+  padding: 10px;
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
