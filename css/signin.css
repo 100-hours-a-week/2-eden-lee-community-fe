@@ -1,0 +1,119 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  height: 100vh;            
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.header button {
+  background-color: transparent;
+  border: transparent;
+  font-family: 'Sandoll GofoRound';
+  font-size: 32px;
+  position: absolute;
+  left: calc(50% - 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+/*회원가입 정보 입력 상자*/
+.signin {
+  margin-top: 100px;
+}
+.signin .title {
+  margin-bottom: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+.signin-input {
+  width: 400px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+}
+.signin-input p {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+.signin-input .image-upload {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;/* 점선 테두리 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgb(200, 200, 200);
+    position: relative;
+    margin: 0 auto
+}
+.image-upload::before {
+    content: "+";
+    font-size: 40px;
+    color: #000000;
+    font-weight: 300;
+}
+.signin-input .input-box {
+  width: 380px;
+  padding: 7px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.signin-input .helper-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+  margin-top: 5px;
+}
+/*로그인&회원가입 버튼*/
+.login-button .btn {
+  width: 80%;
+  padding: 10px;
+  background-color: #ACA0EB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.signin-button .btn {
+  padding: 10px;
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
