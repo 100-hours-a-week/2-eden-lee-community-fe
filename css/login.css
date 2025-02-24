@@ -35,31 +35,38 @@ body {
   background-color: #000000;
 }
 /*로그인 정보 입력 상자*/
+.login {
+  margin-top: 150px;  
+}
 .login .title {
-  margin-top: 180px;
   margin-bottom: 0;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
 }
 .login-input {
   width: 400px;
-  padding: 30px;
+  padding: 20px;
   font-size: 20px;
   font-weight: 700;
   text-align: left;
 }
+.login-input p {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
 .login-input .input-box {
   width: 380px;
-  padding: 10px;
+  padding: 7px;
   margin-top: 0;
   border: 1px solid black;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .login-input .helper-text {
   font-size: 14px;
   font-weight: 400;
   color: red;
+  margin-top: 5px;
 }
 /*로그인&회원가입 버튼*/
 .login-button .btn {
