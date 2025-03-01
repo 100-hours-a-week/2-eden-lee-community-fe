@@ -1,0 +1,126 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  height: 100vh;            
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: #ededed;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.header .profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% + 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+/*페이지 소개 문구*/
+.introduction {
+  padding: 20px;
+}
+.introduction p {
+  margin: 5px;
+  font-size: 25px;
+  font-weight: 300;
+}
+/*게시판 영역*/
+.posts {
+  width: 600px;
+  padding: 20px;
+  font-size: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.posts .btn {
+  align-self: flex-end;
+  width: 130px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ACA0EB;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.posts .btn:hover {
+  background-color: #7F6AEE;
+}
+.posts .post-item {
+  width: 580px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+/*게시글 글자 스타일*/
+.post-item .post-title {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.post-item .post-meta {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.post-meta .post-time{
+  margin-left: auto;
+}
+.post-item .post-contour {
+  position: relative;
+  left: -20px; 
+  width: calc(100% + 40px); 
+  height: 1px;
+}
+/*작성자 정보*/
+.post-item .post-publisher{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.post-publisher .profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.post-publisher .name {
+  font-size: 17px;
+  font-weight: bold;
+}
