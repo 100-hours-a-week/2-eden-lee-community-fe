@@ -1,0 +1,225 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.header button {
+  background-color: transparent;
+  border: transparent;
+  font-family: 'Sandoll GofoRound';
+  font-size: 32px;
+  position: absolute;
+  left: calc(50% - 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% + 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+/*게시글 영역*/
+.post {
+  width: 700px;
+  padding: 20px;
+  font-size: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.post-title {
+  width: 90%;
+}
+.post-title .title {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+.post-publisher {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.post-publisher .profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.post-publisher .name {
+  font-size: 17px;
+  font-weight: bold;
+}
+.post-publisher .post-time {
+  margin-left: 20px;
+}
+.post-publisher .btn-group {
+  display: flex;
+  gap: 10px;  
+  margin-left: auto; 
+}
+.btn-group .post-btn {
+  font-size: 15px;
+  padding: 5px 14px;
+  border: 1px solid #ACA0EB;
+  border-radius: 10px;
+}
+.post-btn:hover {
+  background-color: #ACA0EB;
+}
+.post-contour {
+  position: relative;
+  width: 100%;
+  border: none;
+  border-top: 1px solid lightgray;
+}
+/*게시글 내용*/
+.post .post-content{
+  width: 90%;
+  padding: 20px;
+  font-size: 17px;
+  white-space: pre-line;
+  text-align: left;
+}
+/*게시글 상태*/
+.post-stats {
+  display: flex;
+  margin: 10px;
+}
+.post-stats button {
+  all:unset;
+  display: flex;
+}
+.post-stats span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 10px;
+  width: 90px;
+  height: 60px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+.like-btn.active span{
+  background-color: #ACA0EB;
+  color: #f8f8f8;
+}
+/*게시글 댓글*/
+.post .input-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  background-color: white;
+  border-radius: 20px;
+}
+.comment-input {
+  all: unset;
+  text-align: left;
+  font-size: 16px;
+  margin: 30px;
+  width: 90%;
+  height: 60px;
+}
+.submit-btn {
+  display: block;
+  margin: 10px;
+  margin-left: auto;
+  padding: 10px;
+  width: 120px;
+  background-color: #7F6AEE;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.submit-btn:disabled {
+  background-color: #ACA0EB;
+}
+.comment-container {
+  width: 100%;
+}
+.post-comment {
+  display: flex;
+  padding: 20px;
+  width: 80%;
+  align-items: center;
+}
+.comment-publisher {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.comment-publisher .profile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.comment-publisher .name {
+  font-size: 17px;
+  font-weight: bold;
+}
+.comment-content {
+  font-size: 15px;
+  width: 100%;
+  text-align: left;
+  margin-left: 50px;
+}
+.post-comment .btn-group {
+  display: flex;
+  gap: 10px;  
+  margin-left: auto; 
+}
+.btn-group .comment-btn {
+  font-size: 15px;
+  padding: 5px 14px;
+  border: 1px solid #ACA0EB;
+  border-radius: 10px;
+}
+.comment-btn:hover {
+  background-color: #ACA0EB;
+}
