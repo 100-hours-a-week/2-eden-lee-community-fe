@@ -1,13 +1,32 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const contentDiv = document.querySelector(".post-content");
+document.addEventListener("DOMContentLoaded", () => {   
+	// 게시글 콘텐츠
+  const contentDiv = document.querySelector(".post-content"); 
+  
+  // 게시글 좋아요
   const likeButton = document.querySelector(".like-btn");
-  const commentInputArea = document.querySelector(".comment-input");
-  const submitButton = document.querySelector(".submit-btn");
-
+  
+  // 댓글 등록
+  const commentInputArea = document.querySelector(".comment-input"); 
+  const submitButton = document.querySelector(".submit-btn");   
   submitButton.disabled = true;
 
   // 파일 리스트 (이미지가 먼저, 텍스트가 나중)
   const files = ["data/post-image.jpg", "data/post-content.txt"];
+
+	// 삭제 모달
+	const postDeleteButtons = document.querySelectorAll(".post .btn-group .post-btn:last-child"); // 게시글 삭제 버튼
+	const commentDeleteButtons = document.querySelectorAll(".comment-container .btn-group .comment-btn:last-child"); // 댓글 삭제 버튼
+	
+	const postModal = document.getElementById("deletePostModal");
+	const commentModal = document.getElementById("deleteCommentModal");
+
+	const confirmPostDelete = document.getElementById("confirmPostDelete");
+	const cancelPostDelete = document.getElementById("cancelPostDelete");
+
+	const confirmCommentDelete = document.getElementById("confirmCommentDelete");
+	const cancelCommentDelete = document.getElementById("cancelCommentDelete");
+
+	let targetElement = null; // 삭제 대상
 
   // 게시글 데이터 불러오기
   const fetchPromises = files.map(file => 
@@ -63,4 +82,48 @@ document.addEventListener("DOMContentLoaded", () => {
             submitButton.disabled = true; 
         }
   });
+
+	// 게시글 삭제 버튼 클릭 시
+	postDeleteButtons.forEach(button => {
+		button.addEventListener("click", function () {
+				targetElement = this.closest(".post");
+				postModal.style.display = "flex";
+		});
+	});
+
+	// 댓글 삭제 버튼 클릭 시
+	commentDeleteButtons.forEach(button => {
+			button.addEventListener("click", function () {
+					targetElement = this.closest(".post-comment");
+					commentModal.style.display = "flex";
+			});
+	});
+
+	// 게시글 삭제 확인
+	confirmPostDelete.addEventListener("click", function () {
+			if (targetElement) {
+					targetElement.remove();
+					targetElement = null;
+			}
+			postModal.style.display = "none";
+	});
+
+	// 댓글 삭제 확인
+	confirmCommentDelete.addEventListener("click", function () {
+			if (targetElement) {
+					targetElement.remove();
+					targetElement = null;
+			}
+			commentModal.style.display = "none";
+	});
+
+	// 게시글 삭제 취소
+	cancelPostDelete.addEventListener("click", function () {
+			postModal.style.display = "none";
+	});
+
+	// 댓글 삭제 취소
+	cancelCommentDelete.addEventListener("click", function () {
+			commentModal.style.display = "none";
+	});
 });
