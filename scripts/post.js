@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   submitButton.disabled = true;
 
   // 파일 리스트 (이미지가 먼저, 텍스트가 나중)
-  const files = ["data/post-image.jpg", "data/post-content.txt"];
+  const files = ["/data/post/post-image.jpg", "/data/post/post-content.txt"];
 
 	// 삭제 모달
 	const postDeleteButtons = document.querySelectorAll(".post .btn-group .post-btn:last-child"); // 게시글 삭제 버튼
