@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.querySelector(".submit-btn");   
   submitButton.disabled = true;
 
-  // 파일 리스트 (이미지가 먼저, 텍스트가 나중)
   const files = ["/data/post/post-image.jpg", "/data/post/post-content.txt"];
 
 	// 삭제 모달
@@ -47,20 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch(error => ({ file, error: error.message })) // 오류 발생 시 저장
   );
 
-  // 모든 fetch가 완료된 후 실행
   Promise.all(fetchPromises).then(results => {
       results.forEach(({ file, data, error }) => {
           if (error) {
               contentDiv.innerHTML += `<p>${file}을(를) 불러오는 데 실패했습니다.</p>`;
           } else if (data instanceof Blob) {
-              // 이미지인 경우
               const imgElement = document.createElement("img");
               imgElement.src = URL.createObjectURL(data);
               imgElement.style.width = "100%";
               imgElement.style.display = "block";
               contentDiv.appendChild(imgElement);
           } else {
-              // 텍스트인 경우
               const textElement = document.createElement("p");
               textElement.textContent = data;
               contentDiv.appendChild(textElement);
