@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아무 말 대잔치</title>
+    <link rel="stylesheet" href="/styles/edit-profile.css">
+</head>
+<body>
+  <section class="wrap">
+    <div class="header">
+      <p class="title">아무 말 대잔치</p>
+      <img class="profile" src="/data/profile/키티프로필.jpg" id="uploadImage">
+      <hr class="horizontal-rule"/>
+    </div>
+    <div class="edit-profile">
+      <p class="title">회원정보수정</p>
+      <div class="profile-input">   
+          <label>프로필 사진*</label>
+          <label for="profileImageInput" class="image-upload" id="uploadContainer"></label>
+          <input type="file" id="profileImageInput" accept="image/*">
+          <label>이메일</label>
+          <p id="email">juile0827@naver.com</p>
+          <label>닉네임</label>
+          <input type="text" id="nickname" class="input-box" placeholder="닉네임을 입력하세요">
+          <p id="nicknameHelperText" class="helper-text">*helper text</p>
+      </div>
+      <div class="edit-button">
+          <button id="editBtn" class="btn">수정하기</button>
+      </div>
+      <div class="deleteAccount-button">
+          <button id="deleteAccountBtn" class="btn">회원 탈퇴</button>
+      </div>
+    </div>
+  </section>
+  <script src="/scripts/editProfile.js"></script>
+</body>
+</html>

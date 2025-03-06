@@ -1,0 +1,156 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  min-height: 100vh;
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.header button {
+  background-color: transparent;
+  border: transparent;
+  font-family: 'Sandoll GofoRound';
+  font-size: 32px;
+  position: absolute;
+  left: calc(50% - 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% + 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+/*회원 정보 수정*/
+.edit-profile {
+  margin-top: 10%;
+}
+.edit-profile .title {
+  margin-bottom: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+.profile-input {
+  width: 400px;
+  padding: 20px;
+  font-size: 20px;
+  text-align: left;
+}
+.profile-input label{
+  display: block; 
+  font-weight: bold;
+  margin-top: 30px;
+}
+.profile-input p {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+#profileImage {
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+.profile-input .image-upload {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgb(200, 200, 200);
+  position: relative;
+  margin: 0 auto
+}
+.image-upload::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: 1;
+}
+.image-upload::before {
+  content: "변경";
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: bold;
+  position: absolute;
+  padding: 7px 14px;
+  border: 1px solid white; 
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.4); 
+  z-index: 2;
+}
+
+.profile-input .input-box {
+  width: 100%;
+  margin-top: 5px;
+  padding: 7px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.helper-text {
+  font-size: 13px;
+  color: red;
+  margin-top: 5px;
+}
+/*수정&탈퇴 버튼*/
+.edit-button .btn {
+  width: 90%;
+  padding: 10px;
+  background-color: #ACA0EB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.deleteAccount-button .btn {
+  padding: 10px;
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
