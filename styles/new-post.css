@@ -1,0 +1,141 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;  
+  min-height: 100vh;
+  margin: 0;             
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  width: 100%;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+/*헤더*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.header button {
+  background-color: transparent;
+  border: transparent;
+  font-family: 'Sandoll GofoRound';
+  font-size: 32px;
+  position: absolute;
+  left: calc(50% - 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% + 200px);
+  transform: translateY(-70%); 
+  top: 50%;
+}
+.header .title {
+  font-family: 'Sandoll GofoRound';
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 0;
+}
+.header .horizontal-rule {
+  width: 100%;
+  border: 1;
+  background-color: #000000;
+}
+
+/*게시글 작성란*/
+.write {
+  width: 700px;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center; 
+}
+.write-line {
+  width: 100%;
+  border: 1 lightgray;
+}
+
+.subject {
+  font-size: 20px;
+  font-weight: bold;
+}
+/* 폼 컨테이너 */
+form {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; /* 요소 간 여백 */
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto; 
+}
+
+/* 라벨 */
+form label {
+  display: block; 
+  font-weight: bold;
+  text-align: left;
+  margin-top: 20px;
+}
+
+/* 입력 필드 & 텍스트 영역 */
+form input[type="text"],
+form textarea {
+  border: none;
+  background-color: transparent;
+  width: 100%; /* 부모 크기만큼 */
+  padding: 10px;
+  font-size: 15px;
+  display: block; 
+}
+
+form textarea {
+  height: 200px;
+  resize: vertical; 
+}
+
+/* 파일 업로드 버튼 */
+form input[type="file"] {
+  width: 100%;
+  display: block; /* 줄바꿈 적용 */
+  margin-top: 5px;
+}
+
+/* 미리보기 이미지 스타일 */
+#imagePreview {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 버튼 스타일 */
+form button {
+  align-self: center;
+  width: 70%;
+  padding: 10px;
+  background-color: #7F6AEE;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+form button:disabled {
+  background-color: #ACA0EB;
+}
+.helper-text {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  color: red;
+}
+
