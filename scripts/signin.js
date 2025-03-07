@@ -1,12 +1,14 @@
 
 // TODO
-// 2. 각 항목 helper text 동적으로 보여주기
-// 3. < 버튼과 로그인 하러가기 버튼 클릭 시 login.html로 이동    
+// 각 항목 helper text 동적으로 보여주기
 
 document.addEventListener("DOMContentLoaded", function () {
   const uploadContainer = document.getElementById("uploadContainer");
   const fileInput = document.getElementById("profileImage");
-
+  const previousBtn = document.getElementById("previousBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const signinBtn = document.getElementById("signinBtn");
+    
   // 파일 선택 시 미리보기 업데이트
   fileInput.addEventListener("change", function (event) {
     const file = event.target.files[0];
@@ -20,5 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     reader.readAsDataURL(file);
     }
-});
+  });
+
+  previousBtn.addEventListener("click", function () {
+    console.log("herere")
+    window.location.href="/pages/user/login.html"
+  });
+  
+  loginBtn.addEventListener("click", function () {
+    console.log("herere")
+    window.location.href="/pages/user/login.html"
+  });
+
 });
