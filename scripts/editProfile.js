@@ -24,16 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 각 메뉴 클릭 이벤트 (기능 추가 가능)
 	document.getElementById("editProfile").addEventListener("click", () => {
-		// location.href = "/edit-profile"; // 실제 회원정보 수정 페이지 경로로 변경
+		window.location.href = "/pages/user/edit-profile.html";
 	});
 
 	document.getElementById("changePassword").addEventListener("click", () => {
-		// location.href = "/change-password";
+		window.location.href = "/pages/user/edit-password.html";
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
+		// TODO : 로그아웃 처리 로직 추가
 		alert("로그아웃 되었습니다.");
-		// 로그아웃 처리 로직 추가 가능
+		window.location.href = "/pages/user/login.html";
 	});
 
 	// 기존 프로필 이미지 불러오기

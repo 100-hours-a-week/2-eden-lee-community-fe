@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {   
+  // 헤더 프로필
+  const profileImage = document.getElementById("profileImage");
+	const dropdownMenu = document.getElementById("profileDropdown");
+	
 	// 게시글 콘텐츠
   const contentDiv = document.querySelector(".post-content"); 
   
@@ -12,20 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const files = ["/data/post/post-image.jpg", "/data/post/post-content.txt"];
 
-	// 삭제 모달
-	const postDeleteButtons = document.querySelectorAll(".post .btn-group .post-btn:last-child"); // 게시글 삭제 버튼
-	const commentDeleteButtons = document.querySelectorAll(".comment-container .btn-group .comment-btn:last-child"); // 댓글 삭제 버튼
-	
-	const postModal = document.getElementById("deletePostModal");
-	const commentModal = document.getElementById("deleteCommentModal");
+  // 삭제 모달
+  const postDeleteButtons = document.querySelectorAll(".post .btn-group .post-btn:last-child"); // 게시글 삭제 버튼
+  const commentDeleteButtons = document.querySelectorAll(".comment-container .btn-group .comment-btn:last-child"); // 댓글 삭제 버튼
+  const postModal = document.getElementById("deletePostModal");
+  const commentModal = document.getElementById("deleteCommentModal");
+  const confirmPostDelete = document.getElementById("confirmPostDelete");
+  const cancelPostDelete = document.getElementById("cancelPostDelete");
+  const confirmCommentDelete = document.getElementById("confirmCommentDelete");
+  const cancelCommentDelete = document.getElementById("cancelCommentDelete");
 
-	const confirmPostDelete = document.getElementById("confirmPostDelete");
-	const cancelPostDelete = document.getElementById("cancelPostDelete");
-
-	const confirmCommentDelete = document.getElementById("confirmCommentDelete");
-	const cancelCommentDelete = document.getElementById("cancelCommentDelete");
-
-	let targetElement = null; // 삭제 대상
+  let targetElement = null; // 삭제 대상
 
   // 게시글 데이터 불러오기
   const fetchPromises = files.map(file => 
@@ -121,5 +122,36 @@ document.addEventListener("DOMContentLoaded", () => {
 	// 댓글 삭제 취소
 	cancelCommentDelete.addEventListener("click", function () {
 			commentModal.style.display = "none";
+	});
+
+	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
+	profileImage.addEventListener("click", (event) => {
+		event.stopPropagation(); 
+		const rect = profileImage.getBoundingClientRect();
+		
+		dropdownMenu.style.left = `${rect.left}px`;
+		dropdownMenu.style.top = `${rect.bottom + 5}px`;
+		dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+	});
+
+	// 드롭다운 외부 클릭 시 닫기
+	document.addEventListener("click", (event) => {
+		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+			dropdownMenu.style.display = "none";
+		}
+	});
+
+  document.getElementById("editProfile").addEventListener("click", () => {
+		window.location.href = "/pages/user/edit-profile.html";
+	});
+
+	document.getElementById("changePassword").addEventListener("click", () => {
+		window.location.href = "/pages/user/edit-password.html";
+	});
+
+	document.getElementById("logout").addEventListener("click", () => {
+		// TODO : 로그아웃 처리 로직 추가
+		alert("로그아웃 되었습니다.");
+		window.location.href = "/pages/user/login.html";
 	});
 });
