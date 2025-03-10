@@ -166,5 +166,6 @@ form button:disabled {
   font-weight: 400;
   text-align: left;
   color: red;
+  margin-top: 0;
 }
 

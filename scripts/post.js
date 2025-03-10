@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {   
-  // 헤더 프로필
   const profileImage = document.getElementById("profileImage");
-	const dropdownMenu = document.getElementById("profileDropdown");
+  const dropdownMenu = document.getElementById("profileDropdown");
+  const previousBtn = document.getElementById("previousBtn");
 	
 	// 게시글 콘텐츠
   const contentDiv = document.querySelector(".post-content"); 
@@ -67,7 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 좋아요 버튼 인터렉션
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("active"); // 클릭할 때마다 색상 변경
+    // TODO: 좋아요수 반영 요청
+    if (likeButton.classList.toggle("active")) {
+        likeCount.innerHTML = `${parseInt(likeCount.textContent) + 1}<br>좋아요수`; // 활성화되면 +1
+    } else {
+        likeCount.innerHTML = `${parseInt(likeCount.textContent) - 1}<br>좋아요수`; // 비활성화되면 -1
+    }
   });
 
   // 댓글 입력 감지 인터렉션
@@ -154,4 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});
+  previousBtn.addEventListener("click", function () {
+    window.location.href="/pages/post/posts.html"
+  });
 });

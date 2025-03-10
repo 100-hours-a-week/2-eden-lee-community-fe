@@ -1,21 +1,25 @@
+import { createPost } from "./api.js";
+
 document.addEventListener("DOMContentLoaded", function () {
+  const previousBtn = document.getElementById("previousBtn");
   const profileImage = document.getElementById("profileImage");
   const dropdownMenu = document.getElementById("profileDropdown");
   const postTitle = document.getElementById("postTitle");
   const postContent = document.getElementById("postContent");
   const helperText = document.getElementById("helperText");
+	const postForm = document.getElementById("postForm");
   const submitButton = document.querySelector("button[type='submit']");
   submitButton.disabled = true;
 
   function validateForm() {
       const titleValue = postTitle.value.trim();
       const contentValue = postContent.value.trim();
-
+	
       if (titleValue.length > 0 && contentValue.length > 0) {
-          helperText.style.display = "none";
+          helperText.style.opacity = "0";
           submitButton.disabled = false;
       } else {
-          helperText.style.display = "block";
+          helperText.style.opacity = "1";
           submitButton.disabled = true;
       }
   }
@@ -53,5 +57,22 @@ document.addEventListener("DOMContentLoaded", function () {
 		// TODO : 로그아웃 처리 로직 추가
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
+	});
+	
+	previousBtn.addEventListener("click", function () {
+    window.location.href="/pages/post/posts.html"
+  });
+
+	postForm.addEventListener("submit", async function (event) {
+		event.preventDefault();
+		const formData = new FormData(postForm);
+
+		try {
+				await createPost(formData);
+				alert("게시글이 성공적으로 등록되었습니다!");
+				window.location.href = "/pages/post/posts.html";
+		} catch (error) {
+				alert("게시글 등록 중 오류가 발생했습니다.");
+		}
 	});
 });

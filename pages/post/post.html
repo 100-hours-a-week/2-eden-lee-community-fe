@@ -9,7 +9,7 @@
 <body>
     <section class="wrap">
         <div class="header">
-            <button><</button>
+          <button id="previousBtn"><</button>
             <p class="title">아무 말 대잔치</p>
             <img class="profile" src="/data/profile/키티프로필.jpg" id="profileImage">
             <div class="dropdown-menu" id="profileDropdown">
@@ -37,9 +37,9 @@
           <hr class="post-contour"/>
           <div class="post-content"></div>
           <div class="post-stats">
-            <button class="like-btn"><span class="likes">123<br>좋아요수</span></button>
-            <span class="views">123<br>조회수</span>
-            <span class="comments">123<br>댓글</span>
+            <button class="like-btn"><span id="likeCount" class="likes">123<br>좋아요수</span></button>
+            <span id="viewCount" class="views">123<br>조회수</span>
+            <span id="commentCount" class="comments">123<br>댓글</span>
           </div>        
           <hr class="post-contour"/>
           <div class="input-container">

@@ -9,7 +9,7 @@
 <body>
     <section class="wrap">
         <div class="header">
-            <button><</button>
+            <button id="previousBtn"><</button>
             <p class="title">아무 말 대잔치</p>
             <img class="profile" src="/data/profile/키티프로필.jpg" id="profileImage">
             <div class="dropdown-menu" id="profileDropdown">
@@ -26,7 +26,7 @@
           <form id="postForm">
             <label for="postTitle">제목*</label>
             <hr class="write-line">
-            <input type="text" id="postTitle" name="title" placeholder="제목을 입력해주세요. (최대 26글자)">
+            <input type="text" id="postTitle" name="title" placeholder="제목을 입력해주세요. (최대 26글자)" maxlength="26">
             <hr class="write-line">
 
             <label for="postContent">내용*</label>
@@ -44,6 +44,6 @@
           </form>
         </div>
     </section>
-    <script src="/scripts/newPost.js"></script>
+    <script type="module" src="/scripts/newPost.js"></script>
 </body>
 </html>

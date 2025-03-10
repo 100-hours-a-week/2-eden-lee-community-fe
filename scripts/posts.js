@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const profileImage = document.getElementById("profileImage");
 	const dropdownMenu = document.getElementById("profileDropdown");
+	const newPostBtn = document.getElementById("newPostBtn");
 	
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
 	profileImage.addEventListener("click", (event) => {
@@ -32,5 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		// TODO : 로그아웃 처리 로직 추가
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
+	});
+
+	newPostBtn.addEventListener("click", () => {
+		window.location.href = "/pages/post/new-post.html";
 	});
 });
