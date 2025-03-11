@@ -146,7 +146,8 @@ body {
   font-size: 16px;
 }
 .helper-text {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 400;
   color: red;
   margin-top: 5px;
 }
@@ -154,13 +155,16 @@ body {
 .edit-button .btn {
   width: 90%;
   padding: 10px;
-  background-color: #ACA0EB;
+  background-color: #7F6AEE;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+}
+.edit-button .btn:disabled {
+  background-color: #ACA0EB;
 }
 .deleteAccount-button .btn {
   padding: 10px;
@@ -171,4 +175,70 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+}
+/*토스트 메세지*/
+.toast {
+  /*visibility: hidden; /* 처음에는 숨김 */
+  background-color: #ACA0EB;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 30px;
+  position: fixed;
+  left: 50%;
+  bottom: 70px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  font-size: 20px;
+  font-weight: 350;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, bottom 0.5s ease-in-out;
+}
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+/*회원탈퇴모달*/
+.modal {
+  display: none; /* 기본적으로 숨김 */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+.highlight-question {
+  font-size: large;
+  font-weight: bold;
+}
+.modal-content .btn-group {
+  display: flex;
+  gap: 10px;  
+  justify-content: center;
+}
+.btn-group .cancel-btn {
+  font-size: 15px;
+  padding: 8px 30px;
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: black;
+  color: white;
+}
+.btn-group .confirm-btn {
+  font-size: 15px;
+  padding: 8px 30px;
+  border-radius: 10px;
+  border-color: transparent;
+  background-color: #ACA0EB;
 }

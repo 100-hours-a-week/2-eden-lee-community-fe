@@ -30,7 +30,7 @@
           <p id="email">juile0827@naver.com</p>
           <label>닉네임</label>
           <input type="text" id="nicknameInput" class="input-box" placeholder="닉네임을 입력하세요">
-          <p id="nicknameHelperText" class="helper-text">*helper text</p>
+          <p id="nicknameHelperText" class="helper-text">*닉네임을 입력해주세요.</p>
       </div>
       <div class="edit-button">
           <button id="editBtn" class="btn">수정하기</button>
@@ -39,6 +39,18 @@
           <button id="deleteAccountBtn" class="btn">회원 탈퇴</button>
       </div>
     </div>
+    <div id="toast" class="toast"></div>
+      <!-- 회원탈퇴모달 -->
+      <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+          <p class="highlight-question">회원탈퇴 하시겠습니까?</p>
+          <p>작성된 게시글과 댓글은 삭제됩니다.</p>
+          <div class="btn-group">
+            <button id="cancelAccountDelete" class="cancel-btn">취소</button>
+            <button id="confirmAccountDelete" class="confirm-btn">확인</button>
+          </div>
+        </div>
+      </div>
   </section>
   <script src="/scripts/editProfile.js"></script>
 </body>

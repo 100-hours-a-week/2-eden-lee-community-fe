@@ -139,26 +139,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
 	});
 
-	// 드롭다운 외부 클릭 시 닫기
-	document.addEventListener("click", (event) => {
-		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
-			dropdownMenu.style.display = "none";
-		}
-	});
+  // 드롭다운 외부 클릭 시 닫기
+  document.addEventListener("click", (event) => {
+    if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+        dropdownMenu.style.display = "none";
+    }
+  });
 
   document.getElementById("editProfile").addEventListener("click", () => {
-		window.location.href = "/pages/user/edit-profile.html";
-	});
+    window.location.href = "/pages/user/edit-profile.html";
+  });
 
-	document.getElementById("changePassword").addEventListener("click", () => {
-		window.location.href = "/pages/user/edit-password.html";
-	});
+  document.getElementById("changePassword").addEventListener("click", () => {
+    window.location.href = "/pages/user/edit-password.html";
+  });
 
-	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
-		alert("로그아웃 되었습니다.");
-		window.location.href = "/pages/user/login.html";
-	});
+  document.getElementById("logout").addEventListener("click", () => {
+    // TODO : 로그아웃 처리 로직 추가
+    alert("로그아웃 되었습니다.");
+    window.location.href = "/pages/user/login.html";
+  });
+
   previousBtn.addEventListener("click", function () {
     window.location.href="/pages/post/posts.html"
   });
