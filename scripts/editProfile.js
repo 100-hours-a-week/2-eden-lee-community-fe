@@ -3,7 +3,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	const profileImage = document.getElementById("profileImage");
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const uploadContainer = document.getElementById("uploadContainer");
+	const editBtn = document.getElementById("editBtn");
+	editBtn.disabled = "true";
+
+	// 데이터 입력
   const fileInput = document.getElementById("profileImageInput");
+	const nicknameInput = document.getElementById("nicknameInput");
+	const nicknameHelperText = document.getElementById("nicknameHelperText");
+
+	function checkNicknameDuplication(nicknameValue) {
+    // TODO : 닉네임 중복 체크
+    return true
+  }
 	
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
 	profileImage.addEventListener("click", (event) => {
@@ -24,16 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 각 메뉴 클릭 이벤트 (기능 추가 가능)
 	document.getElementById("editProfile").addEventListener("click", () => {
-		// location.href = "/edit-profile"; // 실제 회원정보 수정 페이지 경로로 변경
+		window.location.href = "/pages/user/edit-profile.html";
 	});
 
 	document.getElementById("changePassword").addEventListener("click", () => {
-		// location.href = "/change-password";
+		window.location.href = "/pages/user/edit-password.html";
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
+		// TODO : 로그아웃 처리 로직 추가
 		alert("로그아웃 되었습니다.");
-		// 로그아웃 처리 로직 추가 가능
+		window.location.href = "/pages/user/login.html";
 	});
 
 	// 기존 프로필 이미지 불러오기
@@ -57,5 +69,24 @@ document.addEventListener("DOMContentLoaded", function () {
 			};
 			reader.readAsDataURL(file);
 		}
+  });
+
+	nicknameInput.addEventListener("blur", function() {
+    const nicknameValue = nicknameInput.value;
+    nicknameHelperText.style.opacity = "1";
+		editBtn.disabled = "true"
+
+    if (nicknameValue === "") {
+      nicknameHelperText.textContent = "*닉네임을 입력해주세요.";  
+    } else if (/\s/.test(nicknameValue)) {
+      nicknameHelperText.textContent = "*띄어쓰기를 없애주세요.";
+    } else if (nicknameValue.length > 10) {
+      nicknameHelperText.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
+    } else if (!checkNicknameDuplication(nicknameValue)) {
+      nicknameHelperText.textContent = "*중복된 닉네임 입니다.";
+    } else {
+      nicknameHelperText.style.opacity = "0";
+			editBtn.disabled = "false"
+    }
   });
 });
