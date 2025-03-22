@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {   
-  const profileImage = document.getElementById("profileImage");
   const dropdownMenu = document.getElementById("profileDropdown");
   const previousBtn = document.getElementById("previousBtn");
 	
@@ -25,6 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelPostDelete = document.getElementById("cancelPostDelete");
   const confirmCommentDelete = document.getElementById("confirmCommentDelete");
   const cancelCommentDelete = document.getElementById("cancelCommentDelete");
+
+  const headerProfileImage = document.getElementById("headerProfileImage");
+  const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+  if (headerProfileImage) {
+    headerProfileImage.src = profileImageUrl;
+  }
+
 
   let targetElement = null; // 삭제 대상
 
@@ -130,9 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
-	profileImage.addEventListener("click", (event) => {
+	headerProfileImage.addEventListener("click", (event) => {
 		event.stopPropagation(); 
-		const rect = profileImage.getBoundingClientRect();
+		const rect = headerProfileImage.getBoundingClientRect();
 		
 		dropdownMenu.style.left = `${rect.left}px`;
 		dropdownMenu.style.top = `${rect.bottom + 5}px`;
@@ -141,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 드롭다운 외부 클릭 시 닫기
   document.addEventListener("click", (event) => {
-    if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+    if (!dropdownMenu.contains(event.target) && !headerProfileImage.contains(event.target)) {
         dropdownMenu.style.display = "none";
     }
   });

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const profileImage = document.getElementById("profileImage");
-	const dropdownMenu = document.getElementById("profileDropdown");
+  const dropdownMenu = document.getElementById("profileDropdown");
 	
 	// 비밀번호 변경
 	const passwordInput = document.getElementById("passwordInput");
@@ -9,6 +8,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const passwordCheckHelperText = document.getElementById("passwordCheckHelperText");
   const editBtn = document.getElementById("editBtn");
 	editBtn.disabled = true;
+
+	const headerProfileImage = document.getElementById("headerProfileImage");
+	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+	if (headerProfileImage) {
+		headerProfileImage.src = profileImageUrl;
+	}
 
 	function validatePassword(passwordValue) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,20}$/.test(passwordValue);
@@ -43,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 	
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
-	profileImage.addEventListener("click", (event) => {
+	headerProfileImage.addEventListener("click", (event) => {
 		event.stopPropagation(); 
-		const rect = profileImage.getBoundingClientRect();
+		const rect = headerProfileImage.getBoundingClientRect();
 		
 		dropdownMenu.style.left = `${rect.left}px`;
 		dropdownMenu.style.top = `${rect.bottom + 5}px`;
@@ -54,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 드롭다운 외부 클릭 시 닫기
 	document.addEventListener("click", (event) => {
-		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+		if (!dropdownMenu.contains(event.target) && !headerProfileImage.contains(event.target)) {
 			dropdownMenu.style.display = "none";
 		}
 	});
