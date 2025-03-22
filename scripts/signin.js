@@ -1,5 +1,5 @@
+import * as authAPI from "../api/user.js";
 
-// TODO
 // 각 항목 helper text 동적으로 보여주기
 document.addEventListener("DOMContentLoaded", function () {
   const uploadContainer = document.getElementById("uploadContainer");
@@ -26,18 +26,32 @@ document.addEventListener("DOMContentLoaded", function () {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue);
   }
 
-  function checkEmailDuplication(emailValue) {
+  async function checkEmailDuplication(emailValue) {
     // TODO : 이메일 중복 체크
-    return true
+    try {
+      const res = await authAPI.checkEmailDuplicate(emailValue); 
+  
+      return res.result.duplicate; 
+    } catch (err) {
+      console.error("이메일 중복 체크 실패:", err.message);
+      return false; 
+    }
   }
 
   function validatePassword(passwordValue) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,20}$/.test(passwordValue);
   }
   
-  function checkNicknameDuplication(nicknameValue) {
+  async function checkNicknameDuplication(nicknameValue) {
     // TODO : 닉네임 중복 체크
-    return true
+    try {
+      const res = await authAPI.checkNicknameDuplicate(nicknameValue); 
+  
+      return res.result.duplicate; 
+    } catch (err) {
+      console.error("닉네임 중복 체크 실패:", err.message);
+      return false; 
+    }
   }
 
   function updateSigninBtn() {
@@ -86,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSigninBtn();
   });
 
-  emailInput.addEventListener("blur", function() {
+  emailInput.addEventListener("blur", async function() {
     const emailValue = emailInput.value.trim();
     emailHelperText.style.opacity = "1";
 
@@ -94,13 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
       emailHelperText.textContent = "*이메일을 입력해주세요.";  
     } else if (!validateEmail(emailValue)) {
       emailHelperText.textContent = "*올바른 이메일 주소 형식을 입력해주세요. (예:example@example.com)";  
-    } else if (!checkEmailDuplication(emailValue)) {
-      emailHelperText.textContent = "*중복된 이메일 입니다.";  
     } else {
-      emailHelperText.textContent = "*";    
-      emailHelperText.style.opacity = "0";
-    }
+      const isDuplicate = await checkEmailDuplication(emailValue);
 
+      if (isDuplicate) {
+        emailHelperText.textContent = "*중복된 이메일 입니다.";
+      } else {
+        emailHelperText.textContent = "*";
+        emailHelperText.style.opacity = "0";
+      }
+    } 
     updateSigninBtn();
   });
 
@@ -137,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSigninBtn();
   });
 
-  nicknameInput.addEventListener("blur", function() {
+  nicknameInput.addEventListener("blur", async function() {
     const nicknameValue = nicknameInput.value;
     nicknameHelperText.style.opacity = "1";
 
@@ -147,13 +164,16 @@ document.addEventListener("DOMContentLoaded", function () {
       nicknameHelperText.textContent = "*띄어쓰기를 없애주세요.";
     } else if (nicknameValue.length > 10) {
       nicknameHelperText.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
-    } else if (!checkNicknameDuplication(nicknameValue)) {
-      nicknameHelperText.textContent = "*중복된 닉네임 입니다.";
     } else {
-      nicknameHelperText.textContent = "*";
-      nicknameHelperText.style.opacity = "0";
-    }
+      const isDuplicate = await checkNicknameDuplication(nicknameValue);
 
+      if (isDuplicate) {
+        nicknameHelperText.textContent = "*중복된 닉네임 입니다.";
+      } else {
+        nicknameHelperText.textContent = "*";
+        nicknameHelperText.style.opacity = "0";
+      }
+    }
     updateSigninBtn();
   });
 
@@ -165,8 +185,17 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href="/pages/user/login.html"
   });
 
-  signinBtn.addEventListener("click", function () {
-    // TODO: 회원정보 저장 로직
-    window.location.href="/pages/user/login.html"
+  signinBtn.addEventListener("click", async function () {
+    // TODO: 회원정보 저장 로직 - 이미지 저장을 어떻게 하는 것이 좋을까..
+    console.log(fileInput.value);
+    try {
+      const res = await authAPI.signup(emailInput.value, passwordInput.value, nicknameInput.value, null); 
+      
+      alert("회원가입이 완료되었습니다.");
+      window.location.href="/pages/user/login.html";
+    } catch (err) {
+      console.error("회원가입 실패: ", err.message);
+      alert("회원가입이 실패하였습니다.");
+    }
   });
 });

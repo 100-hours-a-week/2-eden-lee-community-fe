@@ -1,12 +1,72 @@
+import { getAllpost } from "../api/post.js";
+
 document.addEventListener("DOMContentLoaded", function () {
-  const profileImage = document.getElementById("profileImage");
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const newPostBtn = document.getElementById("newPostBtn");
+
+	const headerProfileImage = document.getElementById("headerProfileImage");
+	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+	if (headerProfileImage) {
+		headerProfileImage.src = profileImageUrl;
+	}
+
+	const postContainer = document.getElementById("postContainer");
+	
+	async function loadPosts() {
+		const postContainer = document.getElementById("postContainer");
+	
+		try {
+			const response = await getAllpost(); // 게시글 목록 불러오기
+			const posts = response.result.posts;
+			
+			posts.forEach(post => {
+				const {
+					post_id,
+					title,
+					author,
+					counts,
+					created_at
+				} = post;
+
+				const profileImageUrl = author.profile_image_url || "/data/profile/default_profile.gif";
+	
+				const article = document.createElement("article");
+				article.className = "post-item";
+	
+				article.innerHTML = `
+					<p class="post-title">${title}</p>
+					<div class="post-meta">
+						<p class="post-like">좋아요 ${counts.likes}</p>
+						<p class="post-comment">댓글 ${counts.comments}</p>
+						<p class="post-view">조회수 ${counts.views}</p>
+						<p class="post-time">${created_at}</p>
+					</div>
+					<hr class="post-contour"/>
+					<div class="post-publisher">
+						<img class="profile" src="${profileImageUrl}" alt="작성자 프로필">
+						<p class="name">${author.nickname}</p>
+					</div>
+				`;
+	
+				// 게시글 클릭 시 상세 페이지 이동
+				article.addEventListener("click", () => {
+					window.location.href = `/pages/post/post.html?postId=${post_id}`;
+				});
+	
+				postContainer.appendChild(article);
+			});
+	
+		} catch (error) {
+			console.error("게시글 로딩 실패:", error.message);
+			postContainer.innerHTML = "<p>게시글을 불러오는 데 실패했습니다.</p>";
+		}
+	}
 	
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
-	profileImage.addEventListener("click", (event) => {
+	headerProfileImage.addEventListener("click", (event) => {
 		event.stopPropagation(); 
-		const rect = profileImage.getBoundingClientRect();
+		const rect = headerProfileImage.getBoundingClientRect();
 		
 		dropdownMenu.style.left = `${rect.left}px`;
 		dropdownMenu.style.top = `${rect.bottom + 5}px`;
@@ -15,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 드롭다운 외부 클릭 시 닫기
 	document.addEventListener("click", (event) => {
-		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+		if (!dropdownMenu.contains(event.target) && !headerProfileImage.contains(event.target)) {
 			dropdownMenu.style.display = "none";
 		}
 	});
@@ -38,4 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	newPostBtn.addEventListener("click", () => {
 		window.location.href = "/pages/post/new-post.html";
 	});
+
+	loadPosts();
 });

@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const profileImageUrl = "/data/profile/키티프로필.jpg"; // 기존 프로필 이미지 경로
-	const profileImage = document.getElementById("profileImage");
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const uploadContainer = document.getElementById("uploadContainer");
 	const deleteAccountBtn = document.getElementById("deleteAccountBtn");
@@ -16,7 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	const deleteAccountModal = document.getElementById("deleteAccountModal");
   const confirmAccountDelete = document.getElementById("confirmAccountDelete");
   const cancelAccountDelete = document.getElementById("cancelAccountDelete");
-  
+
+	const headerProfileImage = document.getElementById("headerProfileImage");
+	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+	if (headerProfileImage) {
+		headerProfileImage.src = profileImageUrl;
+	}
 
 	function checkNicknameDuplication(nicknameValue) {
     // TODO : 닉네임 중복 체크
@@ -34,9 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 	
 	// 프로필 이미지를 클릭하면 드롭다운 표시/숨김
-	profileImage.addEventListener("click", (event) => {
+	headerProfileImage.addEventListener("click", (event) => {
 		event.stopPropagation(); 
-		const rect = profileImage.getBoundingClientRect();
+		const rect = headerProfileImage.getBoundingClientRect();
 		
 		dropdownMenu.style.left = `${rect.left}px`;
 		dropdownMenu.style.top = `${rect.bottom + 5}px`;
@@ -45,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 드롭다운 외부 클릭 시 닫기
 	document.addEventListener("click", (event) => {
-		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+		if (!dropdownMenu.contains(event.target) && !headerProfileImage.contains(event.target)) {
 			dropdownMenu.style.display = "none";
 		}
 	});

@@ -2,7 +2,6 @@ import { createPost } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const previousBtn = document.getElementById("previousBtn");
-  const profileImage = document.getElementById("profileImage");
   const dropdownMenu = document.getElementById("profileDropdown");
   const postTitle = document.getElementById("postTitle");
   const postContent = document.getElementById("postContent");
@@ -10,6 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	const postForm = document.getElementById("postForm");
   const submitButton = document.querySelector("button[type='submit']");
   submitButton.disabled = true;
+
+	const headerProfileImage = document.getElementById("headerProfileImage");
+	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+	if (headerProfileImage) {
+		headerProfileImage.src = profileImageUrl;
+	}
+
 
   function validateForm() {
       const titleValue = postTitle.value.trim();
@@ -28,9 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
   postContent.addEventListener("input", validateForm);
 
   // 프로필 이미지를 클릭하면 드롭다운 표시/숨김
-	profileImage.addEventListener("click", (event) => {
+	headerProfileImage.addEventListener("click", (event) => {
 		event.stopPropagation(); 
-		const rect = profileImage.getBoundingClientRect();
+		const rect = headerProfileImage.getBoundingClientRect();
 		
 		dropdownMenu.style.left = `${rect.left}px`;
 		dropdownMenu.style.top = `${rect.bottom + 5}px`;
@@ -39,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// 드롭다운 외부 클릭 시 닫기
 	document.addEventListener("click", (event) => {
-		if (!dropdownMenu.contains(event.target) && !profileImage.contains(event.target)) {
+		if (!dropdownMenu.contains(event.target) && !headerProfileImage.contains(event.target)) {
 			dropdownMenu.style.display = "none";
 		}
 	});
