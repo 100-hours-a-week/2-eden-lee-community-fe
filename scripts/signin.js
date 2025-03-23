@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   async function checkNicknameDuplication(nicknameValue) {
-    // TODO : 닉네임 중복 체크
     try {
       const res = await authAPI.checkNicknameDuplicate(nicknameValue); 
   

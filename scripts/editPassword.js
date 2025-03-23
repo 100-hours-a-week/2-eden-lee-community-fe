@@ -1,5 +1,8 @@
+import * as userAPI from "../api/user.js";
+
 document.addEventListener("DOMContentLoaded", function () {
-  const dropdownMenu = document.getElementById("profileDropdown");
+  const userId = localStorage.getItem("userId");
+	const dropdownMenu = document.getElementById("profileDropdown");
 	
 	// 비밀번호 변경
 	const passwordInput = document.getElementById("passwordInput");
@@ -10,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	editBtn.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.gif";
 
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});
@@ -109,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateEditBtn();
 	});
 
-passwordCheckInput.addEventListener("blur", function() {
+	passwordCheckInput.addEventListener("blur", function() {
     const passwordValue = passwordInput.value.trim();
     const passwordCheckValue = passwordCheckInput.value.trim();
     passwordCheckHelperText.style.opacity = "1";
@@ -137,8 +140,17 @@ passwordCheckInput.addEventListener("blur", function() {
     updateEditBtn();
 	});
 
-	editBtn.addEventListener("click", function () {
-    // TODO: 비밀번호변경 요청
-		showToast("수정완료");
+	editBtn.addEventListener("click", async function () {
+    const password = passwordInput.value.trim();
+
+		try {
+			await userAPI.updateUserPassword(userId, password);
+
+			showToast("수정완료");
+			editBtn.disabled = true;
+		} catch (err) {
+			console.error("비밀번호 수정 실패:", err.message);
+			alert("비밀번호 수정에 실패했습니다. 다시 시도해주세요.");
+		}
   });
 });

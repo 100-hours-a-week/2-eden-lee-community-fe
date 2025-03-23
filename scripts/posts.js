@@ -5,13 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	const newPostBtn = document.getElementById("newPostBtn");
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+	const profileImageUrl = localStorage.getItem("profileImageUrl");
 
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
 	}
-
-	const postContainer = document.getElementById("postContainer");
 	
 	async function loadPosts() {
 		const postContainer = document.getElementById("postContainer");
@@ -29,8 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
 					created_at
 				} = post;
 
-				const profileImageUrl = author.profile_image_url || "/data/profile/default_profile.gif";
-	
+				const profileImageUrl = post.author.profile_image_url
+            ? post.author.profile_image_url
+            : "/data/profile/default_profile.gif";
+
 				const article = document.createElement("article");
 				article.className = "post-item";
 	
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});

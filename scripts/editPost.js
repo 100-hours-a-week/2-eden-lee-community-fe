@@ -1,49 +1,51 @@
-document.addEventListener("DOMContentLoaded", function () {
+import * as postAPI from "../api/post.js"
+
+document.addEventListener("DOMContentLoaded", async function () {
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const postTitle = document.getElementById("postTitle");
   const postContent = document.getElementById("postContent");
-  const postImage = document.getElementById("postImage");
-	const imagePreview = document.getElementById("imagePreview");  
+	const fileLabel = document.getElementById("fileLabel");
+  const postImage = document.getElementById("postImage"); 
   const helperText = document.getElementById("helperText");
   const submitButton = document.querySelector("button[type='submit']");
 	submitButton.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
-
+	const profileImageUrl = localStorage.getItem("profileImageUrl");
+	
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
 	}
 
+	const urlParams = new URLSearchParams(window.location.search);
+	const postId = urlParams.get("postId");
 
-	// 가정: 게시글 ID가 URL 파라미터에 존재
-	// const urlParams = new URLSearchParams(window.location.search);
-	// const postId = urlParams.get("id");
-
-	// if (!postId) {
-	// 		alert("게시글 ID가 없습니다.");
-	// 		return;
-	// }
+	if (!postId) {
+			alert("게시글 ID가 없습니다.");
+			return;
+	}
 
 	try {
 			// 기존 게시글 데이터를 가져오기 (API 엔드포인트 예시)
-			// const response = await fetch(`/api/posts/${postId}`);
-			//if (!response.ok) throw new Error("게시글 데이터를 불러오지 못했습니다.");
-
-			// const postData = await response.json();
+			const res = await postAPI.getPost(postId)
+			const postData = res.result.post;
 
 			// 제목과 내용 채우기
 			postTitle.value = postData.title || "";
-			postContent.value = postData.content || "";
+			postContent.value = postData.contents.text || "";
+			const imageFileNameSpan = document.getElementById("fileLabel");
 
-			// 이미지가 있을 경우 미리보기 추가
-			if (postData.imageUrl) {
-					const imgElement = document.createElement("img");
-					imgElement.src = postData.imageUrl;
-					imgElement.style.maxWidth = "100%";
-					imgElement.style.marginTop = "10px";
-					imagePreview.appendChild(imgElement);
+			// 이미지가 있을 경우
+			if (postData.contents.image_url) {
+				const imageUrl = postData.contents.image_url;
+				const fileName = imageUrl.split("/").pop(); // 파일명만 추출
+			
+				imageFileNameSpan.textContent = `${fileName}`;
+			} else {
+				imageFileNameSpan.textContent = "파일 선택 없음";
 			}
+
+			validateForm();
 	} catch (error) {
 			console.error("데이터 불러오기 오류:", error);
 	}
@@ -81,6 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 
+	// 이미지 변경시 이름도 바뀜
+	postImage.addEventListener("change", () => {
+		const file = postImage.files[0];
+		fileLabel.textContent = file ? `${file.name}` : "파일이 선택되지 않았습니다.";
+	});
+
 	// 각 메뉴 클릭 이벤트 (기능 추가 가능)
 	document.getElementById("editProfile").addEventListener("click", () => {
 		window.location.href = "/pages/user/edit-profile.html";
@@ -91,8 +99,36 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});
+
+	// 수정 요청
+	submitButton.addEventListener("click", async function (e) {
+		e.preventDefault();
+	
+		const title = postTitle.value.trim();
+		const text = postContent.value.trim();
+	
+		// TODO: 이미지 업로드 관련 수정
+		const imageUrl = fileLabel.textContent === "파일 선택 없음"
+			? null
+			: fileLabel.textContent;
+	
+		try {
+			await postAPI.updatePost(postId, title, text, imageUrl);
+			alert("게시글이 수정되었습니다.");
+			window.location.href = `/pages/post/post.html?postId=${postId}`;
+		} catch (err) {
+			console.error("게시글 수정 실패:", err.message);
+			alert("게시글 수정에 실패했습니다. 다시 시도해주세요.");
+		}
+	});
+	
+
+	// 이전버튼
+	previousBtn.addEventListener("click", function () {
+    window.location.href=`/pages/post/post.html?postId=${postId}`;
+  });
 });

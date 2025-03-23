@@ -1,30 +1,55 @@
-document.addEventListener("DOMContentLoaded", function () {
+import * as userAPI from "../api/user.js";
+
+document.addEventListener("DOMContentLoaded", async function () {
+	const userId = localStorage.getItem("userId");
+	const emailElement = document.getElementById("email");
+  const myEmail = localStorage.getItem("email");
+	const myNickname = localStorage.getItem("nickname");
+
+	if (myEmail) {
+    emailElement.textContent = myEmail;
+  } else {
+    emailElement.textContent = "이메일 정보 없음";
+  }
+	
+	// 데이터 입력
+  const fileInput = document.getElementById("profileImageInput");
+	const nicknameInput = document.getElementById("nicknameInput");
+	const nicknameHelperText = document.getElementById("nicknameHelperText");
+	
+	if (myNickname) {
+		nicknameInput.value = myNickname;
+		nicknameHelperText.textContent = "*";
+    nicknameHelperText.style.opacity = "0";		
+	}
+	
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const uploadContainer = document.getElementById("uploadContainer");
 	const deleteAccountBtn = document.getElementById("deleteAccountBtn");
 	const editBtn = document.getElementById("editBtn");
 	editBtn.disabled = true;
 
-	// 데이터 입력
-  const fileInput = document.getElementById("profileImageInput");
-	const nicknameInput = document.getElementById("nicknameInput");
-	const nicknameHelperText = document.getElementById("nicknameHelperText");
-	
 	// 회원탈퇴 모달
 	const deleteAccountModal = document.getElementById("deleteAccountModal");
   const confirmAccountDelete = document.getElementById("confirmAccountDelete");
   const cancelAccountDelete = document.getElementById("cancelAccountDelete");
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+	const profileImageUrl = localStorage.getItem("profileImageUrl");
 
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
 	}
 
-	function checkNicknameDuplication(nicknameValue) {
-    // TODO : 닉네임 중복 체크
-    return true
+	async function checkNicknameDuplication(nicknameValue) {
+		try {
+			const res = await userAPI.checkNicknameDuplicate(nicknameValue); 
+	
+			return res.result.duplicate; 
+		} catch (err) {
+			console.error("닉네임 중복 체크 실패:", err.message);
+			return false; 
+		}
   }
 
 	function showToast(message) {
@@ -64,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});
@@ -92,8 +117,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
   });
 
-	nicknameInput.addEventListener("blur", function() {
-    const nicknameValue = nicknameInput.value;
+	nicknameInput.addEventListener("blur", async function() {
+		const nicknameValue = nicknameInput.value;
     nicknameHelperText.style.opacity = "1";
 		editBtn.disabled = true;
 
@@ -103,25 +128,61 @@ document.addEventListener("DOMContentLoaded", function () {
       nicknameHelperText.textContent = "*띄어쓰기를 없애주세요.";
     } else if (nicknameValue.length > 10) {
       nicknameHelperText.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
-    } else if (!checkNicknameDuplication(nicknameValue)) {
-      nicknameHelperText.textContent = "*중복된 닉네임 입니다.";
-    } else {
-      nicknameHelperText.style.opacity = "0";
-			editBtn.disabled = false;
-    }
+    } else if (nicknameValue === myNickname) {
+      nicknameHelperText.textContent = "*";
+			nicknameHelperText.style.opacity = "0";
+		} else {
+      const isDuplicate = await checkNicknameDuplication(nicknameValue);
+
+      if (isDuplicate) {
+        nicknameHelperText.textContent = "*중복된 닉네임 입니다.";
+      } else {
+        nicknameHelperText.textContent = "*";
+        nicknameHelperText.style.opacity = "0";
+				editBtn.disabled = false;
+      }
+    } 
   });
 
-	editBtn.addEventListener("click", (event) => {
-		// TODO: 닉네임 수정 요청
-		showToast("수정완료");
+	editBtn.addEventListener("click", async (event) => {
+		const nickname = nicknameInput.value.trim();
+
+		// 현재 보여지는 프로필 이미지 경로 활용
+		const profileImageStyle = uploadContainer.style.backgroundImage;
+		const profileImageUrl = profileImageStyle
+			? profileImageStyle.slice(5, -2) // url("...") 형식에서 경로만 추출
+			: "";
+
+		try {
+			await userAPI.updateUserProfile(userId, nickname, profileImageUrl);
+			
+			// 로컬스토리지 업데이트
+			localStorage.setItem("nickname", nickname);
+			localStorage.setItem("profileImageUrl", profileImageUrl);
+
+			showToast("수정완료");
+			editBtn.disabled = true;
+		} catch (err) {
+			console.error("회원정보 수정 실패:", err.message);
+			alert("회원정보 수정에 실패했습니다. 다시 시도해주세요.");
+		}
 	});
 
 	deleteAccountBtn.addEventListener("click", (event) => {
 		deleteAccountModal.style.display = "flex";
 	});
 
-	confirmAccountDelete.addEventListener("click", function () {
-		// TODO: 회원탈퇴 요청 
+	confirmAccountDelete.addEventListener("click", async function () {
+		try {
+			await userAPI.deleteUser(userId);
+			
+			localStorage.clear(); 
+			alert("회원 탈퇴가 완료되었습니다.");
+			window.location.href = "/pages/user/login.html";
+		} catch (err) {
+			console.error("회원탈퇴 실패:", err.message);
+			alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+		}
     window.location.href = "/pages/user/login.html";
 	});	
 

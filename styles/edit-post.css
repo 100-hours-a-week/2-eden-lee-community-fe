@@ -134,15 +134,24 @@ form textarea {
 
 /* 파일 업로드 버튼 */
 form input[type="file"] {
-  width: 100%;
-  display: block; /* 줄바꿈 적용 */
-  margin-top: 5px;
+  color: transparent;
+  width: 80px;
 }
 
-/* 미리보기 이미지 스타일 */
-#imagePreview {
-  margin-top: 10px;
-  text-align: center;
+.file-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.file-label:hover {
+  background-color: #eee;
 }
 
 /* 버튼 스타일 */

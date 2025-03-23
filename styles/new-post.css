@@ -138,12 +138,7 @@ form input[type="file"] {
   width: 100%;
   display: block; /* 줄바꿈 적용 */
   margin-top: 5px;
-}
-
-/* 미리보기 이미지 스타일 */
-#imagePreview {
-  margin-top: 10px;
-  text-align: center;
+  margin-bottom: 30px;
 }
 
 /* 버튼 스타일 */

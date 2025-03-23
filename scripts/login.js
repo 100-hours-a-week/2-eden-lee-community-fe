@@ -39,9 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const userId = localStorage.getItem("userId");
             const res = await getUserInfo(userId);
 
+            const imageUrl = res.result.profile_image_url 
+            ? res.result.profile_image_url 
+            : "/data/profile/default_profile.gif";
+
             localStorage.setItem("email",res.result.email);
             localStorage.setItem("nickname",res.result.nickname);
-            localStorage.setItem("profileImageUrl",res.result.profile_image_url);
+            localStorage.setItem("profileImageUrl", imageUrl);
 
         } catch (err) {
             console.error("유저정보 조회 실패:", err.message);
