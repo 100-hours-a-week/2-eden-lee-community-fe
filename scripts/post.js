@@ -46,10 +46,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const isMyPost = userId === post.author.user_id;
 
+    const imageUrl = post.author.profile_image_url
+            ? post.author.profile_image_url
+            : "/data/profile/default_profile.gif";
+
     // 게시글 관련 요소 채우기
     document.querySelector(".post-title .title").textContent = post.title;
     document.querySelector(".post-publisher .name").textContent = post.author.nickname;
-    document.querySelector(".post-publisher .profile").src = post.author.profile_image_url || "/data/profile/default_profile.gif";
+    document.querySelector(".post-publisher .profile").src = imageUrl;
     document.querySelector(".post-publisher .post-time").textContent = post.created_at;
     document.querySelector(".post-content").textContent = post.contents.text;
 
@@ -73,13 +77,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     post.comments.forEach(comment => {
       const isMine = comment.author.user_id === userId;
-      const profileImage = comment.author.profile_image_url || "/data/profile/default_profile.gif";
+      const profileImageUrl = comment.author.profile_image_url
+            ? comment.author.profile_image_url
+            : "/data/profile/default_profile.gif";
+      
     
       const commentHTML = `
         <div class="post-comment" data-comment-id="${comment.comment_id}">
           <div class="comment">
             <div class="comment-publisher">
-              <img class="profile" src="${profileImage}" alt="댓글 작성자">
+              <img class="profile" src="${profileImageUrl}" alt="댓글 작성자">
               <p class="name">${comment.author.nickname}</p>
               <p class="post-time">${comment.created_at}</p>
             </div>

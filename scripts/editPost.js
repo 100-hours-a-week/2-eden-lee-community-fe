@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 	submitButton.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
-
+	const profileImageUrl = localStorage.getItem("profileImageUrl");
+	
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
 	}
