@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});

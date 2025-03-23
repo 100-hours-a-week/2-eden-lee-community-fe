@@ -29,7 +29,7 @@
               <p class="name">더미 작성자1</p>      
               <p class="post-time">2021-01-01 00:00:00</p>
               <div class="btn-group">
-                <button class="post-btn">수정</button>
+                <button id="post-update" class="post-btn">수정</button>
                 <button class="post-btn">삭제</button>
               </div>
             </div>          
@@ -37,8 +37,8 @@
           <hr class="post-contour"/>
           <div class="post-content"></div>
           <div class="post-stats">
-            <button class="like-btn"><span id="likeCount" class="likes">123<br>좋아요수</span></button>
-            <span id="viewCount" class="views">123<br>조회수</span>
+            <button class="like-btn"><span id="likeCount" class="likes"><br>좋아요수</span></button>
+            <span id="viewCount" class="views"><br>조회수</span>
             <span id="commentCount" class="comments">123<br>댓글</span>
           </div>        
           <hr class="post-contour"/>
@@ -48,30 +48,7 @@
             <button class="submit-btn">댓글 등록</button>
           </div>
           <div class="comment-container">
-            <div class="post-comment">
-              <div class="comment">
-                <div class="comment-publisher">
-                  <img class="profile" src="/data/profile/default_profile.gif" id="profileImage">
-                  <p class="name">더미 작성자1</p>      
-                  <p class="post-time">2021-01-01 00:00:00</p>
-                </div>
-                <p class="comment-content">댓글 내용</p>  
-              </div>
-              <div class="btn-group">
-                <button class="comment-btn">수정</button>
-                <button class="comment-btn">삭제</button>
-              </div>
-            </div>
-            <div class="post-comment">
-              <div class="comment">
-                <div class="comment-publisher">
-                  <img class="profile" src="/data/profile/default_profile.gif" id="profileImage">
-                  <p class="name">더미 작성자1</p>      
-                  <p class="post-time">2021-01-01 00:00:00</p>
-                </div>
-                <p class="comment-content">댓글 내용</p>  
-              </div>
-            </div>
+            <!-- 댓글 동적 추가 -->
           </div>
         </div>
         <!-- 삭제 확인 모달 -->

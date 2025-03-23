@@ -1,6 +1,8 @@
-import { createPost } from "./api.js";
+import { createPost } from "../api/post.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+	const userId = Number(localStorage.getItem("userId"));
+
   const previousBtn = document.getElementById("previousBtn");
   const dropdownMenu = document.getElementById("profileDropdown");
   const postTitle = document.getElementById("postTitle");
@@ -61,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("logout").addEventListener("click", () => {
-		// TODO : 로그아웃 처리 로직 추가
+		localStorage.clear();
 		alert("로그아웃 되었습니다.");
 		window.location.href = "/pages/user/login.html";
 	});
@@ -72,10 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	postForm.addEventListener("submit", async function (event) {
 		event.preventDefault();
-		const formData = new FormData(postForm);
 
+		const title = postTitle.value.trim();
+		const text = postContent.value.trim();
+		
+		// TODO: 이미지 업로드
 		try {
-				await createPost(formData);
+				await createPost(userId, title, text, null);
 				alert("게시글이 성공적으로 등록되었습니다!");
 				window.location.href = "/pages/post/posts.html";
 		} catch (error) {
