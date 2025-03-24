@@ -29,7 +29,7 @@ export function updateUserProfile(userId, nickname, profileImageUrl) {
   };
   
   return request(`/users/${userId}/profile`, {
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify(body),
   });
 }
@@ -40,7 +40,7 @@ export function updateUserPassword(userId, password) {
   };
 
   return request(`/users/${userId}/profile`, {
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify(body),
   });
 }
