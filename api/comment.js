@@ -19,7 +19,7 @@ export function updateComment(commentId, contents) {
   };
 
   return request(`/comments/${commentId}`, {
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify(body),
   });
 }

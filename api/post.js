@@ -38,7 +38,7 @@ export function updatePost(postId, title, text, imageUrl) {
   };
 
   return request(`/posts/${postId}`, {
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify(body),
   });
 }
