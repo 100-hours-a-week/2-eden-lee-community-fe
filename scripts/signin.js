@@ -190,8 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("email", emailInput.value);
     formData.append("password", passwordInput.value);
     formData.append("nickname", nicknameInput.value);
-    formData.append("profileImage", file);
-
+    
+    if (file) {
+			formData.append("postImage", file);
+		}
+    
     try {
       const res = await authAPI.signup(formData); 
       

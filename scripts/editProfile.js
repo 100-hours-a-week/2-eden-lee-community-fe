@@ -158,8 +158,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 		const formData = new FormData();
 		formData.append("nickname", nicknameInput.value);
-		formData.append("profileImage", file);
-	
+		
+		if (file) {
+			formData.append("postImage", file);
+		}
+
 		try {
 			const res = await userAPI.updateUserProfile(userId, formData);
 
@@ -168,7 +171,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 				: "/data/profile/default_profile.gif";
 
 			// 로컬스토리지 업데이트
-			localStorage.setItem("nickname", nickname);
+			localStorage.setItem("nickname", nicknameInput.value);
 			localStorage.setItem("profileImageUrl", imageUrl);
 
 			showToast("수정완료");
