@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 			};
 			reader.readAsDataURL(file);
 		}
+
+		editBtn.disabled = false;
   });
 
 	nicknameInput.addEventListener("blur", async function() {
