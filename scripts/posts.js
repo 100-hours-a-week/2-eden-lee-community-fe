@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 				// 게시글 클릭 시 상세 페이지 이동
 				article.addEventListener("click", () => {
+
+    			postAPI.increasePostViews(post_id);
 					window.location.href = `/pages/post/post.html?postId=${post_id}`;
 				});
 	

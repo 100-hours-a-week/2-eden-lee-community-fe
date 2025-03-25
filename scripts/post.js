@@ -81,9 +81,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     textPara.textContent = post.contents.text;
     postContentEl.appendChild(textPara);
 
-    
-
-
     document.getElementById("likeCount").innerHTML = `${post.counts.likes}<br>좋아요수`;
     document.getElementById("viewCount").innerHTML = `${post.counts.views}<br>조회수`;
     document.getElementById("commentCount").innerHTML = `${post.counts.comments}<br>댓글`;
@@ -133,12 +130,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;    
       commentContainer.insertAdjacentHTML("beforeend", commentHTML);
     });
-
-    postAPI.increasePostViews(postId);
-
-    document.getElementById("viewCount").innerHTML = `${post.counts.views+1}<br>조회수`;
-
-
 
   } catch (err) {
     console.error("게시글 상세 로딩 실패:", err.message);
