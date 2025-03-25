@@ -1,6 +1,9 @@
 import * as userAPI from "../api/user.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+	const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+
   const userId = localStorage.getItem("userId");
 	const dropdownMenu = document.getElementById("profileDropdown");
 	
@@ -13,11 +16,15 @@ document.addEventListener("DOMContentLoaded", function () {
 	editBtn.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.gif";
+	
+	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
 
-	if (headerProfileImage) {
-		headerProfileImage.src = profileImageUrl;
-	}
+  if (headerProfileImage) {
+    headerProfileImage.src = profileImageUrl;
+  }
 
 	function validatePassword(passwordValue) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,20}$/.test(passwordValue);
