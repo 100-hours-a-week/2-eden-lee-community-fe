@@ -1,11 +1,17 @@
 import { getAllpost } from "../api/post.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+	const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const newPostBtn = document.getElementById("newPostBtn");
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl");
+	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
 
 	if (headerProfileImage) {
 		headerProfileImage.src = profileImageUrl;
@@ -28,9 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				} = post;
 
 				const profileImageUrl = post.author.profile_image_url
-            ? post.author.profile_image_url
-            : "/data/profile/default_profile.gif";
-
+					? `${SERVER_URL}${post.author.profile_image_url}`
+					: DEFAULT_PROFILE_IMAGE;
+			
 				const article = document.createElement("article");
 				article.className = "post-item";
 	

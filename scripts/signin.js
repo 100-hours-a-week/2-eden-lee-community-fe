@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function checkEmailDuplication(emailValue) {
-    // TODO : 이메일 중복 체크
     try {
       const res = await authAPI.checkEmailDuplicate(emailValue); 
   
@@ -185,10 +184,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   signinBtn.addEventListener("click", async function () {
-    // TODO: 회원정보 저장 로직 - 이미지 저장을 어떻게 하는 것이 좋을까..
-    console.log(fileInput.value);
+    const file = fileInput.files[0] ?? null;
+
+    const formData = new FormData();
+    formData.append("email", emailInput.value);
+    formData.append("password", passwordInput.value);
+    formData.append("nickname", nicknameInput.value);
+    formData.append("profileImage", file);
+
     try {
-      const res = await authAPI.signup(emailInput.value, passwordInput.value, nicknameInput.value, null); 
+      const res = await authAPI.signup(formData); 
       
       alert("회원가입이 완료되었습니다.");
       window.location.href="/pages/user/login.html";
