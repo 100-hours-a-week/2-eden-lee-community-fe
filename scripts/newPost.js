@@ -89,8 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		formData.append("userId", userId);
 		formData.append("title", postTitle.value.trim());
 		formData.append("text", postContent.value.trim());
-		formData.append("postImage", file);
-	
+		
+		if (file) {
+			formData.append("postImage", file);
+		}
+		
 		try {
 				await createPost(formData);
 				alert("게시글이 성공적으로 등록되었습니다!");

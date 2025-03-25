@@ -120,8 +120,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 		const formData = new FormData();
 		formData.append("title", postTitle.value.trim());
 		formData.append("text", postContent.value.trim());
-		formData.append("postImage", file);
-	
+		
+		if (file) {
+			formData.append("postImage", file);
+		}
 	
 		try {
 			await postAPI.updatePost(postId, formData);
