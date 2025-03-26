@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 	const SERVER_URL = "http://localhost:8080";
   const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
 
+	const isFileChange = false
+
 	const userId = localStorage.getItem("userId");
 	const emailElement = document.getElementById("email");
   const myEmail = localStorage.getItem("email");
@@ -66,6 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     setTimeout(() => {
         toast.classList.remove("show");
+				location.reload();
     }, 2000);
 	}
 	
@@ -106,7 +109,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 		uploadContainer.style.backgroundImage = `url('${profileImageUrl}')`;
 		uploadContainer.style.backgroundSize = "cover";
 		uploadContainer.style.backgroundPosition = "center";
-
 	}
 
   // 파일 선택 시 미리보기 업데이트
@@ -140,6 +142,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else if (nicknameValue === myNickname) {
       nicknameHelperText.textContent = "*";
 			nicknameHelperText.style.opacity = "0";
+			if (!isFileChange) {
+				editBtn.disabled = false;
+			}
 		} else {
       const isDuplicate = await checkNicknameDuplication(nicknameValue);
 
@@ -160,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 		formData.append("nickname", nicknameInput.value);
 		
 		if (file) {
-			formData.append("postImage", file);
+			formData.append("profileImage", file);
 		}
 
 		try {
@@ -175,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 			localStorage.setItem("profileImageUrl", imageUrl);
 
 			showToast("수정완료");
-			editBtn.disabled = true;
+			
 		} catch (err) {
 			console.error("회원정보 수정 실패:", err.message);
 			alert("회원정보 수정에 실패했습니다. 다시 시도해주세요.");

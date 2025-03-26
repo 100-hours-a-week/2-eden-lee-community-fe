@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			editBtn.disabled = true;
 		} catch (err) {
 			console.error("비밀번호 수정 실패:", err.message);
-			alert("비밀번호 수정에 실패했습니다. 다시 시도해주세요.");
+			alert(err.message);
 		}
   });
 });
