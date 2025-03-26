@@ -2,6 +2,9 @@ import * as postAPI from "../api/post.js"
 import * as commentAPI from "../api/comment.js"
 
 document.addEventListener("DOMContentLoaded", async () => { 
+  const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get("postId");
   const userId = Number(localStorage.getItem("userId"));
@@ -33,7 +36,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const cancelCommentDelete = document.getElementById("cancelCommentDelete");
 
   const headerProfileImage = document.getElementById("headerProfileImage");
-  const profileImageUrl = localStorage.getItem("profileImageUrl") || "/data/profile/default_profile.jpg";
+
+  const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
 
   if (headerProfileImage) {
     headerProfileImage.src = profileImageUrl;
@@ -46,16 +53,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const isMyPost = userId === post.author.user_id;
 
-    const imageUrl = post.author.profile_image_url
-            ? post.author.profile_image_url
-            : "/data/profile/default_profile.gif";
-
+    const profileImage = post.author.profile_image_url
+      ? `${SERVER_URL}${post.author.profile_image_url}`
+      : DEFAULT_PROFILE_IMAGE;
+  
     // 게시글 관련 요소 채우기
     document.querySelector(".post-title .title").textContent = post.title;
     document.querySelector(".post-publisher .name").textContent = post.author.nickname;
-    document.querySelector(".post-publisher .profile").src = imageUrl;
+    document.querySelector(".post-publisher .profile").src = profileImage;
     document.querySelector(".post-publisher .post-time").textContent = post.created_at;
-    document.querySelector(".post-content").textContent = post.contents.text;
+    
+    
+    const postContentEl = document.querySelector(".post-content");
+    // 이미지가 있는 경우 먼저 이미지 삽입
+    postContentEl.innerHTML = "";
+    if (post.contents.image_url) {
+      const image = document.createElement("img");
+      image.src = `${SERVER_URL}${post.contents.image_url}`;
+      image.alt = "게시글 이미지";
+      image.style.maxWidth = "100%";
+      image.style.marginBottom = "1rem";
+      postContentEl.appendChild(image);
+    }
+
+    // 텍스트 내용 삽입
+    const textPara = document.createElement("p");
+    textPara.textContent = post.contents.text;
+    postContentEl.appendChild(textPara);
 
     document.getElementById("likeCount").innerHTML = `${post.counts.likes}<br>좋아요수`;
     document.getElementById("viewCount").innerHTML = `${post.counts.views}<br>조회수`;
@@ -78,9 +102,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     post.comments.forEach(comment => {
       const isMine = comment.author.user_id === userId;
       const profileImageUrl = comment.author.profile_image_url
-            ? comment.author.profile_image_url
-            : "/data/profile/default_profile.gif";
-      
+        ? `${SERVER_URL}${comment.author.profile_image_url}`
+        : DEFAULT_PROFILE_IMAGE;
+
     
       const commentHTML = `
         <div class="post-comment" data-comment-id="${comment.comment_id}">
@@ -106,8 +130,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;    
       commentContainer.insertAdjacentHTML("beforeend", commentHTML);
     });
-
-    postAPI.increasePostViews(postId);
 
   } catch (err) {
     console.error("게시글 상세 로딩 실패:", err.message);

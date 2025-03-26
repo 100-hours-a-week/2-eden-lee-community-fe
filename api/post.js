@@ -12,34 +12,17 @@ export function getPost(postId) {
   });
 }
 
-export function createPost(userId, title, text, imageUrl) {
-  const body = {
-    user_id: userId,
-    title: title,
-    contents: {
-      text: text,
-      image_url: imageUrl,
-    },
-  };
-
+export function createPost(formData) {
   return request("/posts", {
     method: "POST",
-    body: JSON.stringify(body),
+    body: formData,
   });
 }
 
-export function updatePost(postId, title, text, imageUrl) {
-  const body = {
-    title: title,
-    contents: {
-      text: text,
-      image_url: imageUrl,
-    },
-  };
-
+export function updatePost(postId, formData) {
   return request(`/posts/${postId}`, {
     method: "PUT",
-    body: JSON.stringify(body),
+    body: formData,
   });
 }
 

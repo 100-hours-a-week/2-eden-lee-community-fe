@@ -1,6 +1,8 @@
 import { createPost } from "../api/post.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+	const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
 	const userId = Number(localStorage.getItem("userId"));
 
   const previousBtn = document.getElementById("previousBtn");
@@ -10,14 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const helperText = document.getElementById("helperText");
 	const postForm = document.getElementById("postForm");
   const submitButton = document.querySelector("button[type='submit']");
+	const postImage = document.getElementById("postImage"); 
+  
   submitButton.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl");
+	
+	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
 
-	if (headerProfileImage) {
-		headerProfileImage.src = profileImageUrl;
-	}
+  if (headerProfileImage) {
+    headerProfileImage.src = profileImageUrl;
+  }
 
 
   function validateForm() {
@@ -75,12 +83,19 @@ document.addEventListener("DOMContentLoaded", function () {
 	postForm.addEventListener("submit", async function (event) {
 		event.preventDefault();
 
-		const title = postTitle.value.trim();
-		const text = postContent.value.trim();
+		const file = postImage.files[0] ?? null;
+
+		const formData = new FormData();
+		formData.append("userId", userId);
+		formData.append("title", postTitle.value.trim());
+		formData.append("text", postContent.value.trim());
 		
-		// TODO: 이미지 업로드
+		if (file) {
+			formData.append("postImage", file);
+		}
+		
 		try {
-				await createPost(userId, title, text, null);
+				await createPost(formData);
 				alert("게시글이 성공적으로 등록되었습니다!");
 				window.location.href = "/pages/post/posts.html";
 		} catch (error) {

@@ -1,17 +1,10 @@
 import { request } from "./apiClient.js";
 
 
-export function signup(email, password, nickname, profileImageUrl) {
-  const body = {
-    email : email,
-    password : password,
-    nickname : nickname,
-    profile_image_url : profileImageUrl
-  };
-  
+export function signup(formData) {
   return request("/users", {
     method: "POST",
-    body: JSON.stringify(body),
+    body: formData,
     useAuth: false,
   });
 }
@@ -22,15 +15,10 @@ export function getUserInfo(userId) {
   });
 }
 
-export function updateUserProfile(userId, nickname, profileImageUrl) {
-  const body = {
-    nickname : nickname,
-    profile_image_url : profileImageUrl
-  };
-  
+export function updateUserProfile(userId, formData) {
   return request(`/users/${userId}/profile`, {
     method: "PUT",
-    body: JSON.stringify(body),
+    body: formData,
   });
 }
 
@@ -39,7 +27,7 @@ export function updateUserPassword(userId, password) {
     password : password
   };
 
-  return request(`/users/${userId}/profile`, {
+  return request(`/users/${userId}/password`, {
     method: "PUT",
     body: JSON.stringify(body),
   });

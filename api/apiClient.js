@@ -9,10 +9,13 @@ export async function request(endpoint, options = {}) {
     const token = useAuth ? localStorage.getItem("accessToken") : null;
 
     updatedOptions.headers = {
-      "Content-Type": "application/json",
       ...(useAuth && token ? { Authorization: `Bearer ${token}` } : {}),
       ...updatedOptions.headers,
     };
+
+    if (!(updatedOptions.body instanceof FormData)) {
+      updatedOptions.headers["Content-Type"] = "application/json";
+    }
 
     const response = await fetch(`${BASE_URL}${endpoint}`, updatedOptions);
     const data = await response.json();

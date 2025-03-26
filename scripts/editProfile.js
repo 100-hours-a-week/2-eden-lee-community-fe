@@ -1,6 +1,11 @@
 import * as userAPI from "../api/user.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
+	const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+
+	const isFileChange = false
+
 	const userId = localStorage.getItem("userId");
 	const emailElement = document.getElementById("email");
   const myEmail = localStorage.getItem("email");
@@ -35,11 +40,15 @@ document.addEventListener("DOMContentLoaded", async function () {
   const cancelAccountDelete = document.getElementById("cancelAccountDelete");
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl");
+	
+	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
 
-	if (headerProfileImage) {
-		headerProfileImage.src = profileImageUrl;
-	}
+  if (headerProfileImage) {
+    headerProfileImage.src = profileImageUrl;
+  }
 
 	async function checkNicknameDuplication(nicknameValue) {
 		try {
@@ -59,6 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     setTimeout(() => {
         toast.classList.remove("show");
+				location.reload();
     }, 2000);
 	}
 	
@@ -99,7 +109,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 		uploadContainer.style.backgroundImage = `url('${profileImageUrl}')`;
 		uploadContainer.style.backgroundSize = "cover";
 		uploadContainer.style.backgroundPosition = "center";
-
 	}
 
   // 파일 선택 시 미리보기 업데이트
@@ -115,6 +124,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 			};
 			reader.readAsDataURL(file);
 		}
+
+		editBtn.disabled = false;
   });
 
 	nicknameInput.addEventListener("blur", async function() {
@@ -131,6 +142,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else if (nicknameValue === myNickname) {
       nicknameHelperText.textContent = "*";
 			nicknameHelperText.style.opacity = "0";
+			if (!isFileChange) {
+				editBtn.disabled = false;
+			}
 		} else {
       const isDuplicate = await checkNicknameDuplication(nicknameValue);
 
@@ -145,23 +159,28 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
 	editBtn.addEventListener("click", async (event) => {
-		const nickname = nicknameInput.value.trim();
+		const file = fileInput.files[0] ?? null;
 
-		// 현재 보여지는 프로필 이미지 경로 활용
-		const profileImageStyle = uploadContainer.style.backgroundImage;
-		const profileImageUrl = profileImageStyle
-			? profileImageStyle.slice(5, -2) // url("...") 형식에서 경로만 추출
-			: "";
+		const formData = new FormData();
+		formData.append("nickname", nicknameInput.value);
+		
+		if (file) {
+			formData.append("profileImage", file);
+		}
 
 		try {
-			await userAPI.updateUserProfile(userId, nickname, profileImageUrl);
-			
+			const res = await userAPI.updateUserProfile(userId, formData);
+
+			const imageUrl = res.result.profile_image_url 
+				? res.result.profile_image_url 
+				: "/data/profile/default_profile.gif";
+
 			// 로컬스토리지 업데이트
-			localStorage.setItem("nickname", nickname);
-			localStorage.setItem("profileImageUrl", profileImageUrl);
+			localStorage.setItem("nickname", nicknameInput.value);
+			localStorage.setItem("profileImageUrl", imageUrl);
 
 			showToast("수정완료");
-			editBtn.disabled = true;
+			
 		} catch (err) {
 			console.error("회원정보 수정 실패:", err.message);
 			alert("회원정보 수정에 실패했습니다. 다시 시도해주세요.");

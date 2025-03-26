@@ -1,6 +1,9 @@
 import * as postAPI from "../api/post.js"
 
 document.addEventListener("DOMContentLoaded", async function () {
+	const SERVER_URL = "http://localhost:8080";
+  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const postTitle = document.getElementById("postTitle");
   const postContent = document.getElementById("postContent");
@@ -11,11 +14,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 	submitButton.disabled = true;
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
-	const profileImageUrl = localStorage.getItem("profileImageUrl");
 	
-	if (headerProfileImage) {
-		headerProfileImage.src = profileImageUrl;
-	}
+	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+  const profileImageUrl = rawProfileImageUrl
+    ? `${SERVER_URL}${rawProfileImageUrl}`
+    : DEFAULT_PROFILE_IMAGE; 
+
+  if (headerProfileImage) {
+    headerProfileImage.src = profileImageUrl;
+  }
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const postId = urlParams.get("postId");
@@ -108,16 +115,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 	submitButton.addEventListener("click", async function (e) {
 		e.preventDefault();
 	
-		const title = postTitle.value.trim();
-		const text = postContent.value.trim();
-	
-		// TODO: 이미지 업로드 관련 수정
-		const imageUrl = fileLabel.textContent === "파일 선택 없음"
-			? null
-			: fileLabel.textContent;
+		const file = postImage.files[0] ?? null;
+
+		const formData = new FormData();
+		formData.append("title", postTitle.value.trim());
+		formData.append("text", postContent.value.trim());
+		
+		if (file) {
+			formData.append("postImage", file);
+		}
 	
 		try {
-			await postAPI.updatePost(postId, title, text, imageUrl);
+			await postAPI.updatePost(postId, formData);
 			alert("게시글이 수정되었습니다.");
 			window.location.href = `/pages/post/post.html?postId=${postId}`;
 		} catch (err) {
