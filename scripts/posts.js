@@ -2,13 +2,15 @@ import * as postAPI from "../api/post.js";
 
 document.addEventListener("DOMContentLoaded", function () {
 	const SERVER_URL = "http://localhost:8080";
-  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+  const DEFAULT_PROFILE_IMAGE = "/uploads/default_profile.gif";
 
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const newPostBtn = document.getElementById("newPostBtn");
 
 	const headerProfileImage = document.getElementById("headerProfileImage");
 	const rawProfileImageUrl = localStorage.getItem("profileImageUrl");
+	console.log(rawProfileImageUrl)
+
   const profileImageUrl = rawProfileImageUrl
     ? `${SERVER_URL}${rawProfileImageUrl}`
     : DEFAULT_PROFILE_IMAGE; 

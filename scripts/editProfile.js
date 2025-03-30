@@ -2,7 +2,7 @@ import * as userAPI from "../api/user.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
 	const SERVER_URL = "http://localhost:8080";
-  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+  const DEFAULT_PROFILE_IMAGE = "/uploads/default_profile.gif";
 
 	const isFileChange = false
 
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 			const imageUrl = res.result.profile_image_url 
 				? res.result.profile_image_url 
-				: "/data/profile/default_profile.gif";
+				: "/uploads/default_profile.gif";
 
 			// 로컬스토리지 업데이트
 			localStorage.setItem("nickname", nicknameInput.value);

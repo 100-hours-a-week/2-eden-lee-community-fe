@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const userId = localStorage.getItem("userId");
             const res = await getUserInfo(userId);
-
+            
             const imageUrl = res.result.profile_image_url 
             ? res.result.profile_image_url 
-            : "/data/profile/default_profile.gif";
+            : "/uploads/default_profile.gif";
 
             localStorage.setItem("email",res.result.email);
             localStorage.setItem("nickname",res.result.nickname);

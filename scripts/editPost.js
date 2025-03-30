@@ -2,7 +2,7 @@ import * as postAPI from "../api/post.js"
 
 document.addEventListener("DOMContentLoaded", async function () {
 	const SERVER_URL = "http://localhost:8080";
-  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+  const DEFAULT_PROFILE_IMAGE = "/uploads/default_profile.gif";
 
 	const dropdownMenu = document.getElementById("profileDropdown");
 	const postTitle = document.getElementById("postTitle");

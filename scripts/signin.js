@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("nickname", nicknameInput.value);
     
     if (file) {
-			formData.append("postImage", file);
+			formData.append("profileImage", file);
 		}
     
     try {

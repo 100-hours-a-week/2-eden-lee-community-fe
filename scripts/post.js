@@ -3,7 +3,7 @@ import * as commentAPI from "../api/comment.js"
 
 document.addEventListener("DOMContentLoaded", async () => { 
   const SERVER_URL = "http://localhost:8080";
-  const DEFAULT_PROFILE_IMAGE = "/data/profile/default_profile.gif";
+  const DEFAULT_PROFILE_IMAGE = "/uploads/default_profile.gif";
 
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get("postId");
